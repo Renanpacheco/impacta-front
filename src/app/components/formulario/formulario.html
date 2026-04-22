@@ -1,0 +1,8 @@
+<p>formulario works!</p>
+
+<form [formGroup]="tarefaForm" (ngSubmit)="enviar()">
+    Título: <input formControlName="titulo">
+    Descrição: <input formControlName="descricao">
+
+    <button type="submit" [disabled]="!tarefaForm.valid">Enviar</button>
+</form>
