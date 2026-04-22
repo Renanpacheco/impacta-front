@@ -1,1 +1,5 @@
-<p>listagem works!</p>
+@for (item of postsLista; track item.id) {
+    <p>{{item.id}}</p>
+    <p>{{item.title}}</p>
+
+}
