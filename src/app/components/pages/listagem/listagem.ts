@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { ConsumoApi, Ipost } from '../../services/consumo-api';
+import { ConsumoApi, Ipost } from '../../../services/consumo-api';
 
 @Component({
   selector: 'app-listagem',
