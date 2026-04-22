@@ -1,9 +1,11 @@
 import { Component, inject } from '@angular/core';
 import { ConsumoApi, Ipost } from '../../../services/consumo-api';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-listagem',
-  imports: [],
+  standalone: true,
+  imports: [CommonModule],
   templateUrl: './listagem.html',
   styleUrl: './listagem.css',
 })
