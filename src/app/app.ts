@@ -1,7 +1,7 @@
 import { Component, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { Listagem } from "./components/listagem/listagem";
-import { Formulario } from "./components/formulario/formulario";
+import { Listagem } from "./components/pages/listagem/listagem";
+import { Formulario } from "./components/pages/formulario/formulario";
 
 @Component({
   selector: 'app-root',
