@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ConsumoApi } from '../../../services/consumo-api';
 
 @Component({
@@ -10,6 +10,7 @@ import { ConsumoApi } from '../../../services/consumo-api';
   styleUrl: './formulario.css',
 })
 export class Formulario {
+  readonly router =inject(Router)
   readonly route= inject(ActivatedRoute);
   readonly api=inject(ConsumoApi)
 
@@ -19,25 +20,29 @@ export class Formulario {
     
   })
   preencherFormulario(tarefa: any) {
-  this.tarefaForm.patchValue({
-    titulo: tarefa.title,
-    descricao: tarefa.body
-  });
-}
+    this.tarefaForm.patchValue({
+      titulo: tarefa.title,
+      descricao: tarefa.body
+    });
+  }
 
   carregarDados(id: string) {
-  this.api.getTarefaById(id).subscribe((tarefa) => {
-    this.preencherFormulario(tarefa);
-  });
-}
+    this.api.getTarefaById(id).subscribe((tarefa) => {
+      this.preencherFormulario(tarefa);
+    });
+  }
 
   ngOnInit() {
-  const id = this.route.snapshot.paramMap.get('id');
+    const id = this.route.snapshot.paramMap.get('id');
 
-  if (id) {
-    this.carregarDados(id);
+    if (id) {
+      this.carregarDados(id);
+    }
   }
-}
+
+  voltar(){
+    this.router.navigate(['']);
+  }
 
   enviar(){
     const dados= this.tarefaForm.value
