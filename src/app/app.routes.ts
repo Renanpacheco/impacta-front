@@ -4,6 +4,7 @@ import { Formulario } from './components/pages/formulario/formulario'
 
 export const routes: Routes = [
     {path: '', component: Listagem},
-    {path: 'create', component: Formulario}
+    {path: 'criar', component: Formulario},
+    {path: 'editar/:id', component: Formulario}
 
 ];

@@ -3,10 +3,10 @@
     <p>{{item.title}}</p>
 
     <button type="button">Finalizar</button>
-    <button type="button">Editar</button>
+    <button type="button" (click)="editar(item)">Editar</button>
     <button type="button">Excluir</button>
     
 
 }
 
-<button>Nova tarefa</button>
+<button (click)="criar()">Nova tarefa</button>

@@ -20,5 +20,10 @@ export class ConsumoApi {
     return this._httpClient.get<Ipost[]>('https://jsonplaceholder.typicode.com/posts');
     
   }
+
+  getTarefaById(id: string | number): Observable<Ipost> {
+    return this._httpClient.get<Ipost>(`https://jsonplaceholder.typicode.com/posts/${id}`);
+  }
+  
   
 }
