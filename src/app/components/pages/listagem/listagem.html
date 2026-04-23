@@ -1,12 +1,12 @@
 @for (item of postsLista; track item.id) {
-    <p>{{item.id}}</p>
-    <p>{{item.title}}</p>
-
-    <button type="button">Finalizar</button>
+  
+    <li>{{item.id}}</li>
+    <li>{{item.title}}</li>
+    <button type="button" (click)="finalizar()">Finalizar</button>
     <button type="button" (click)="editar(item)">Editar</button>
-    <button type="button">Excluir</button>
-    
-
+    <button type="button">Excluir</button> 
+  
+  
 }
 
-<button (click)="criar()">Nova tarefa</button>
+<button type="button" (click)="criar()">Nova tarefa</button>

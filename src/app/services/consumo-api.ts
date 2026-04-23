@@ -24,6 +24,12 @@ export class ConsumoApi {
   getTarefaById(id: string | number): Observable<Ipost> {
     return this._httpClient.get<Ipost>(`https://jsonplaceholder.typicode.com/posts/${id}`);
   }
+
+  deleteTarefa(id: number) {
+  return this._httpClient.delete(
+    `https://jsonplaceholder.typicode.com/posts/1`
+  );
+}
   
   
 }
