@@ -1,8 +1,20 @@
-<button (click)="voltar()">Voltar</button>
-
 <form [formGroup]="tarefaForm" (ngSubmit)="enviar()">
-    Título: <input formControlName="titulo">
-    Descrição: <input formControlName="descricao">
+  <div>
+    <label>Título:</label>
+    <input type="text" formControlName="titulo">
+    <small *ngIf="tarefaForm.get('titulo')?.invalid && tarefaForm.get('titulo')?.touched">
+      O título é obrigatório.
+    </small>
+  </div>
 
-    <button type="submit" [disabled]="!tarefaForm.valid">Enviar</button>
+  <div>
+    <label>Descrição:</label>
+    <textarea formControlName="descricao"></textarea>
+  </div>
+
+  <button type="submit" [disabled]="tarefaForm.invalid">
+    {{ idTarefaExistente ? 'Salvar Alterações' : 'Cadastrar Tarefa' }}
+  </button>
+  
+  <button type="button" (click)="voltar()">Cancelar</button>
 </form>

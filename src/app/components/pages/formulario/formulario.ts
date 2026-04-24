@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ConsumoApi } from '../../../services/consumo-api';
+import { Acesso } from '../../../services/acesso';
 
 @Component({
   selector: 'app-formulario',
@@ -12,13 +12,25 @@ import { ConsumoApi } from '../../../services/consumo-api';
 export class Formulario {
   readonly router =inject(Router)
   readonly route= inject(ActivatedRoute);
-  readonly api=inject(ConsumoApi)
+  readonly api=inject(Acesso)
+
+  idTarefaExistente: string | null = null;
 
   tarefaForm = new FormGroup({
     titulo: new FormControl('',[Validators.required]),
     descricao: new FormControl('',[Validators.required]),
     
-  })
+  });
+
+  ngOnInit() {
+    const id = this.route.snapshot.paramMap.get('id');
+
+    if (id) {
+      this.idTarefaExistente = id; 
+      this.carregarDados(Number(id));
+    }
+  }
+
   preencherFormulario(tarefa: any) {
     this.tarefaForm.patchValue({
       titulo: tarefa.title,
@@ -26,31 +38,54 @@ export class Formulario {
     });
   }
 
-  carregarDados(id: string) {
-    this.api.getTarefaById(id).subscribe((tarefa) => {
-      this.preencherFormulario(tarefa);
+  carregarDados(id: number) {
+    this.api.getTarefaPorId(id).subscribe({
+      next: (tarefa) => {
+        this.tarefaForm.patchValue({
+          titulo: tarefa.titulo,
+          descricao: tarefa.descricao
+        });
+      },
+      error: (err) => console.error('Erro ao carregar tarefa', err)
     });
   }
 
-  ngOnInit() {
-    const id = this.route.snapshot.paramMap.get('id');
-
-    if (id) {
-      this.carregarDados(id);
-    }
-  }
+  
 
   voltar(){
     this.router.navigate(['']);
   }
 
-  enviar(){
-    const dados= this.tarefaForm.value
+  enviar() {
+    if (this.tarefaForm.invalid) return;
 
-    const payload={
-      ...dados,
-      criacao: new Date()
+    const dados = this.tarefaForm.value;
+  
+    const payload: any = {
+      titulo: dados.titulo,
+      descricao: dados.descricao,
+      ultimaAtualizacao: new Date().toISOString() 
+    };
+
+    if (this.idTarefaExistente) {
+    
+      payload.id = this.idTarefaExistente; 
+
+      this.api.atualizarTarefa(payload).subscribe({
+        next: () => {
+          alert('Tarefa atualizada com sucesso!');
+          this.voltar();
+        },
+        error: (err) => console.error('Erro ao atualizar:', err)
+      });
+    } else {
+
+      this.api.criarTarefa(payload).subscribe({
+        next: () => {
+          alert('Tarefa criada!');
+          this.voltar();
+        }
+      });
     }
-    console.log("form", payload)
   }
 }
