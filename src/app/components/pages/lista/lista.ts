@@ -5,6 +5,7 @@ import { AsyncPipe, CommonModule } from '@angular/common';
 import { Observable, tap } from 'rxjs';
 import { Router } from '@angular/router';
 
+
 @Component({
   selector: 'app-lista',
   imports: [CommonModule],
@@ -64,4 +65,6 @@ export class Lista implements OnInit{
       error: (err) => console.error('Erro ao finalizar tarefa', err)
     });
   }
+
+
 }

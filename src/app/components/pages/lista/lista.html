@@ -1,7 +1,4 @@
-<p>teste</p>
-<p>a</p>
-
-
+<h1>Lista de Tarefas</h1>
 <button (click)="criar()">Nova Tarefa</button>
 
 <ul *ngIf="tarefas$ | async as lista; else carregando">
@@ -19,13 +16,3 @@
 <ng-template #carregando>
     <p>Carregando tarefas...</p>
 </ng-template>
-<!--<ul>
-    <li *ngFor="let item of tarefas">{{item.titulo}}</li>
-</ul>
-<ul>
-    <li *ngFor="let item of tarefas$ | async">{{ item.titulo }}</li>
-    <button type="button" >Finalizar</button>
-    <button type="button" >Editar</button>
-    <button type="button">Excluir</button> 
-</ul>
-<button type="button" (click)="criar()">Nova tarefa</button>-->
