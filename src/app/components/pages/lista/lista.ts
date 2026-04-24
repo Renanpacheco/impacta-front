@@ -12,25 +12,14 @@ import { Router } from '@angular/router';
   styleUrl: './lista.css',
 })
 export class Lista implements OnInit{
-/*
-  tarefas:Tarefa[]=[]
-  
-  constructor(private taskService:Acesso){}
 
-  ngOnInit():void{
-    this.taskService.getTarefas().subscribe((dado)=>{
-      this.tarefas=dado;
-      console.log(dado)
-    });
-
-  }*/
  readonly router =inject(Router)
  tarefas$!: Observable<Tarefa[]>;
 
   constructor(private acessoAPI: Acesso) {}
 
   ngOnInit(): void {
-    //this.tarefas$ = this.acessoAPI.getTarefas();
+    
     this.carregarTarefas();
     console.log(this.tarefas$)
   }
@@ -41,13 +30,14 @@ export class Lista implements OnInit{
     );
   }
 
+
   criar(){
     this.router.navigate(['/criar']);
   }
 
   editar(item:Tarefa){
       this.router.navigate(['/editar', item.id]);
-    }
+  }
   
   excluir(item: Tarefa) {
     const confirmar = confirm(`Deseja excluir a tarefa "${item.titulo}"?`);
@@ -60,6 +50,18 @@ export class Lista implements OnInit{
         this.carregarTarefas();
       },
       error: (err) => console.error('Erro ao excluir:', err)
+    });
+  }
+
+  
+
+  finalizar(item: Tarefa) {
+    this.acessoAPI.finalizarTarefa(item.id).subscribe({
+      next: () => {
+        alert('Tarefa concluída com sucesso!');
+        this.carregarTarefas(); 
+      },
+      error: (err) => console.error('Erro ao finalizar tarefa', err)
     });
   }
 }

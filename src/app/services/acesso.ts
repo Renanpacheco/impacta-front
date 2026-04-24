@@ -34,4 +34,8 @@ export class Acesso {
     return this.http.put<Tarefa>(`${this.apiUrl}/${tarefa.id}`, tarefa);
   }
 
+  finalizarTarefa(id: number): Observable<Tarefa> {
+  return this.http.patch<Tarefa>(`${this.apiUrl}/${id}`, { status: 'concluido' });
+  }
+
 }

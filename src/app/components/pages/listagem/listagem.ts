@@ -36,7 +36,7 @@ export class Listagem {
 
   this._consumoApi.deleteTarefa(item.id).subscribe({
     next: () => {
-      // remove da lista sem reload
+
       this.postsLista = this.postsLista.filter(t => t.id !== item.id);
       console.log('Tarefa excluída com sucesso');
     },
