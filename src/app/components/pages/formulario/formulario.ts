@@ -2,10 +2,11 @@ import { Component, inject } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Acesso } from '../../../services/acesso';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-formulario',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, CommonModule],
   templateUrl: './formulario.html',
   styleUrl: './formulario.css',
 })
@@ -64,6 +65,7 @@ export class Formulario {
     const payload: any = {
       titulo: dados.titulo,
       descricao: dados.descricao,
+      status:"Pendente",
       ultimaAtualizacao: new Date().toISOString() 
     };
 
