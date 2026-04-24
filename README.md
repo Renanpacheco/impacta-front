@@ -1,59 +1,140 @@
-# Tarefas
+# Projeto Tarefas (Full Stack)
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.2.8.
+Aplicação completa para gerenciamento de tarefas.
 
-## Development server
+## Tecnologias
 
-To start a local development server, run:
+-   Backend: .NET (ASP.NET Core + Entity Framework)
+-   Frontend: Angular
+-   Banco de Dados: SQL Server (Docker)
 
-```bash
-ng serve
-```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+## ⚙️ Pré-requisitos
 
-## Code scaffolding
+Antes de iniciar, instale:
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+-   Node.js (versão 20.19+)\
+    https://nodejs.org/pt-br/download
 
-```bash
-ng generate component component-name
-```
+-   Angular CLI\
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+    npm install -g @angular/cli
 
-```bash
-ng generate --help
-```
+-   .NET SDK\
+    https://dotnet.microsoft.com/en-us/download
 
-## Building
+-   Docker\
+    https://docs.docker.com/
 
-To build the project run:
 
-```bash
-ng build
-```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+## Executando o projeto
 
-## Running unit tests
+>  Execute os passos **na ordem**
 
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
 
-```bash
-ng test
-```
 
-## Running end-to-end tests
+## 🗄️ 1. Subir o banco de dados (SQL Server)
 
-For end-to-end (e2e) testing, run:
+    docker run -e "ACCEPT_EULA=Y" \
+               -e "SA_PASSWORD=SenhaForte123!" \
+               -p 1433:1433 \
+               --name sqlserver \
+               -d mcr.microsoft.com/mssql/server:2022-latest
 
-```bash
-ng e2e
-```
+Aguarde alguns segundos até o banco iniciar.
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+## 🔧 2. Backend (.NET)
 
-## Additional Resources
+### Clonar repositório
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+    git clone https://github.com/Renanpacheco/impacta-back
+    cd impacta-back
+
+### Restaurar dependências
+
+    dotnet restore
+
+### Aplicar migrations
+
+    dotnet ef database update
+
+### Rodar API
+
+    dotnet run
+
+### Opcional para rodar a api com interface gráfica
+    
+    dotnet watch
+
+A API estará disponível em:
+
+http://localhost:5104
+
+
+
+## 3. Frontend (Angular)
+
+### Clonar repositório
+
+    git clone https://github.com/Renanpacheco/impacta-front
+    cd impacta-front
+
+### Instalar dependências
+
+    npm install
+
+### Rodar aplicação
+
+    ng serve --open
+
+A aplicação estará disponível em:
+
+http://localhost:4200
+
+
+
+## 🔗 Integração
+
+O frontend consome a API via:
+
+http://localhost:5104/api/TarefaApi
+
+
+
+## Problemas comuns
+
+### Erro de conexão com banco
+
+Verifique se o container está rodando:
+
+    docker ps
+
+Se necessário:
+
+    docker start sqlserver
+
+
+
+### API não conecta no Angular
+
+Verifique se:
+
+-   A API está rodando
+-   A URL está correta (`/api/TarefaApi`)
+-   CORS está habilitado
+
+
+
+## Observações
+
+-   O banco é criado automaticamente via migrations
+-   O container pode ser reiniciado com:
+
+
+    docker start sqlserver
+
+
+## Autor
+
+Renan Pacheco
