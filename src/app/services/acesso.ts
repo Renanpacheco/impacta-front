@@ -10,7 +10,7 @@ import { Tarefa } from '../../Tarefa';
 })
 export class Acesso {
 
-  private apiUrl = 'http://localhost:3000/tasks'
+  private apiUrl = 'http://localhost:5104/api/TarefaApi';
 
   constructor(private http: HttpClient){}
 
@@ -35,7 +35,8 @@ export class Acesso {
   }
 
   finalizarTarefa(id: number): Observable<Tarefa> {
-  return this.http.patch<Tarefa>(`${this.apiUrl}/${id}`, { status: 'concluido' });
-  }
+  
+  return this.http.patch<Tarefa>(`${this.apiUrl}/${id}/finalizar`, {});
+}
 
 }

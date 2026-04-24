@@ -1,9 +1,7 @@
 export interface Tarefa {
-    
-    id: number,
-    titulo: string,
-    descricao: string,
-    status: string,
-    criacao: Date
-
+  id: number;
+  titulo: string;
+  descricao: string;
+  status?: string;   
+  criacao?: string | Date; 
 }

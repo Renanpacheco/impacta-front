@@ -65,28 +65,26 @@ export class Formulario {
     const dados = this.tarefaForm.value;
 
     if (this.idTarefaExistente) {
-      
-      const payload: Tarefa = {
-        ...this.tarefaOriginal!,
-        titulo: dados.titulo as string, 
-        descricao: dados.descricao as string,
-        id: Number(this.idTarefaExistente)
-      };
+  const payload = {
+  id: Number(this.idTarefaExistente),
+  titulo: dados.titulo ?? '',
+  descricao: dados.descricao ?? ''
+};
 
-      this.api.atualizarTarefa(payload).subscribe({
-        next: () => {
-          alert('Tarefa atualizada!');
-          this.voltar();
-        },
-        error: (err) => console.error('Erro ao atualizar:', err)
-      });
-    } else {
-      
-      const payload: any = {
+  this.api.atualizarTarefa(payload).subscribe({
+    next: () => {
+      alert('Tarefa atualizada!');
+      this.voltar();
+    },
+    error: (err) => console.error('Erro ao atualizar:', err)
+  });
+} else {
+        const payload: any = {
         titulo: dados.titulo,
         descricao: dados.descricao,
         status: "Pendente",
-        criacao: new Date().toLocaleDateString('pt-BR')
+  
+        criacao: new Date().toISOString() 
       };
 
       this.api.criarTarefa(payload).subscribe({
