@@ -3,6 +3,7 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { ActivatedRoute, Router } from '@angular/router';
 import { Acesso } from '../../../services/acesso';
 import { CommonModule } from '@angular/common';
+import { Tarefa } from '../../../../Tarefa';
 
 @Component({
   selector: 'app-formulario',
@@ -16,6 +17,7 @@ export class Formulario {
   readonly api=inject(Acesso)
 
   idTarefaExistente: string | null = null;
+  tarefaOriginal?: Tarefa;
 
   tarefaForm = new FormGroup({
     titulo: new FormControl('',[Validators.required]),
@@ -61,26 +63,31 @@ export class Formulario {
     if (this.tarefaForm.invalid) return;
 
     const dados = this.tarefaForm.value;
-  
-    const payload: any = {
-      titulo: dados.titulo,
-      descricao: dados.descricao,
-      status:"Pendente",
-      ultimaAtualizacao: new Date().toISOString() 
-    };
 
     if (this.idTarefaExistente) {
-    
-      payload.id = this.idTarefaExistente; 
+      
+      const payload: Tarefa = {
+        ...this.tarefaOriginal!,
+        titulo: dados.titulo as string, 
+        descricao: dados.descricao as string,
+        id: Number(this.idTarefaExistente)
+      };
 
       this.api.atualizarTarefa(payload).subscribe({
         next: () => {
-          alert('Tarefa atualizada com sucesso!');
+          alert('Tarefa atualizada!');
           this.voltar();
         },
         error: (err) => console.error('Erro ao atualizar:', err)
       });
     } else {
+      
+      const payload: any = {
+        titulo: dados.titulo,
+        descricao: dados.descricao,
+        status: "Pendente",
+        criacao: new Date().toLocaleDateString('pt-BR')
+      };
 
       this.api.criarTarefa(payload).subscribe({
         next: () => {
